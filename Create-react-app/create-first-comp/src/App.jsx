@@ -1,10 +1,14 @@
-import JbButton from './JbButton'
+import Hello from './Hello'
+import Random from './Random'
 
 function App(){
   return (
   <div>
      <h1>Hello React </h1>
-     <JbButton></JbButton>
+     <Hello></Hello>
+     <Random></Random>
+     <Random></Random>
+     <Random></Random>
   </div> 
   )
 }
