@@ -1,9 +1,10 @@
 import { useState } from "react";
 import styles from "./AddTodo.module.css";
+import { GrAdd } from "react-icons/gr";
 
 function AddTodo({ onNewItem }) {
-  const [todoName, setTodoName] = useState();
-  const [dueDate, setDueDate] = useState();
+  const [todoName, setTodoName] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
   const handleNameChange = (event) => {
     setTodoName(event.target.value);
@@ -42,7 +43,7 @@ function AddTodo({ onNewItem }) {
           className="btn btn-success todo-button"
           onClick={handleAddButtonClicked}
         >
-          Add
+          <GrAdd />
         </button>
       </div>
     </div>

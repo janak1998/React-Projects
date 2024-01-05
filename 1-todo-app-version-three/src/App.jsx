@@ -24,7 +24,6 @@ function App() {
       (item) => item.name != toDeleteItemName
     );
     setTodoItems(newTodoItems);
-    console.log(toDeleteItemName);
   };
 
   return (
