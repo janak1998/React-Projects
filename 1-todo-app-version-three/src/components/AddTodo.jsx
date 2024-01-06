@@ -1,10 +1,13 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import styles from "./AddTodo.module.css";
 import { GrAdd } from "react-icons/gr";
+import { TodoItemsContext } from "../store/todo-items-store";
 
-function AddTodo({ onNewItem }) {
+function AddTodo() {
   const todoNameElement = useRef();
   const dueDateElement = useRef();
+
+  const { addNewItem } = useContext(TodoItemsContext);
 
   const handleAddButtonClicked = (e) => {
     e.preventDefault();
@@ -12,7 +15,7 @@ function AddTodo({ onNewItem }) {
     const dueDate = dueDateElement.current.value;
     todoNameElement.current.value = "";
     dueDateElement.current.value = "";
-    onNewItem(todoName, dueDate);
+    addNewItem(todoName, dueDate);
   };
   return (
     <div className="container text-center">
