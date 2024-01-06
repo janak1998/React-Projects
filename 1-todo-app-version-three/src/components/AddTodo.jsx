@@ -1,23 +1,18 @@
-import { useState } from "react";
+import { useRef } from "react";
 import styles from "./AddTodo.module.css";
 import { GrAdd } from "react-icons/gr";
 
 function AddTodo({ onNewItem }) {
-  const [todoName, setTodoName] = useState("");
-  const [dueDate, setDueDate] = useState("");
-
-  const handleNameChange = (event) => {
-    setTodoName(event.target.value);
-  };
-  const handleDateChange = (event) => {
-    setDueDate(event.target.value);
-  };
+  const todoNameElement = useRef();
+  const dueDateElement = useRef();
 
   const handleAddButtonClicked = (e) => {
     e.preventDefault();
+    const todoName = todoNameElement.current.value;
+    const dueDate = dueDateElement.current.value;
+    todoNameElement.current.value = "";
+    dueDateElement.current.value = "";
     onNewItem(todoName, dueDate);
-    setTodoName("");
-    setDueDate("");
   };
   return (
     <div className="container text-center">
@@ -25,18 +20,16 @@ function AddTodo({ onNewItem }) {
         <div className="col-6">
           <input
             type="text"
+            ref={todoNameElement}
             placeholder="Enter Todo Here"
             className={styles.todoWidthFull}
-            value={todoName}
-            onChange={handleNameChange}
           />
         </div>
         <div className="col-4">
           <input
             type="date"
+            ref={dueDateElement}
             className={styles.todoWidthFull}
-            value={dueDate}
-            onChange={handleDateChange}
           />
         </div>
         <div className="col-2">
