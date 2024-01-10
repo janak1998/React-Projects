@@ -9,7 +9,16 @@ const DEFAULT_CONTEXT = {
 export const PostList = createContext(DEFAULT_CONTEXT);
 
 const postListReducer = (currPostList, action) => {
-  return currPostList;
+  let newPostList = currPostList;
+  if (action.type === "DELETE_POST") {
+    newPostList = currPostList.filter(
+      (post) => post.id !== action.payload.postId
+    );
+  } else if (action.type === "ADD_POST") {
+    newPostList = [action.payload, ...currPostList];
+  }
+
+  return newPostList;
 };
 
 const PostListProvider = ({ children }) => {
@@ -18,9 +27,30 @@ const PostListProvider = ({ children }) => {
     DEFAULT_POST_LIST
   );
 
-  const addPost = () => {};
+  const addPost = (userId, postTitle, postBody, reactions, tags) => {
+    var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
 
-  const deletePost = () => {};
+    dispatchPostList({
+      type: "ADD_POST",
+      payload: {
+        id: randLetter + Date.now(),
+        title: postTitle,
+        body: postBody,
+        reactions: reactions,
+        userId: userId,
+        tags: tags,
+      },
+    });
+  };
+
+  const deletePost = (postId) => {
+    dispatchPostList({
+      type: "DELETE_POST",
+      payload: {
+        postId,
+      },
+    });
+  };
 
   return (
     <PostList.Provider
@@ -45,7 +75,7 @@ const DEFAULT_POST_LIST = [
     tags: ["vaction", "Mumbai", "Enjoying"],
   },
   {
-    id: "w",
+    id: "2",
     title: "Pass hogaya bhai",
     body: "4 saal ki masti k baad bhi ho gate hain pass. Hard to beleive",
     reactions: 15,
