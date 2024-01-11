@@ -1,13 +1,14 @@
 import { createContext, useReducer } from "react";
-
+//Default context structure
 const DEFAULT_CONTEXT = {
   postList: [],
   addPost: () => {},
   deletePost: () => {},
 };
 
+//context initialise
 export const PostList = createContext(DEFAULT_CONTEXT);
-
+//reducer
 const postListReducer = (currPostList, action) => {
   let newPostList = currPostList;
   if (action.type === "DELETE_POST") {
@@ -21,6 +22,7 @@ const postListReducer = (currPostList, action) => {
   return newPostList;
 };
 
+//provider invoke
 const PostListProvider = ({ children }) => {
   const [postList, dispatchPostList] = useReducer(
     postListReducer,
