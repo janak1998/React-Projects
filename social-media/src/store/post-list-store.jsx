@@ -3,6 +3,7 @@ import { createContext, useReducer } from "react";
 const DEFAULT_CONTEXT = {
   postList: [],
   addPost: () => {},
+  addInitialPosts: () => {},
   deletePost: () => {},
 };
 
@@ -15,19 +16,17 @@ const postListReducer = (currPostList, action) => {
     newPostList = currPostList.filter(
       (post) => post.id !== action.payload.postId
     );
+  } else if (action.type === "ADD_INITIAL_POSTS") {
+    newPostList = action.payload.posts;
   } else if (action.type === "ADD_POST") {
     newPostList = [action.payload, ...currPostList];
   }
-
   return newPostList;
 };
 
 //provider invoke
 const PostListProvider = ({ children }) => {
-  const [postList, dispatchPostList] = useReducer(
-    postListReducer,
-    DEFAULT_POST_LIST
-  );
+  const [postList, dispatchPostList] = useReducer(postListReducer, []);
 
   const addPost = (userId, postTitle, postBody, reactions, tags) => {
     var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
@@ -41,6 +40,15 @@ const PostListProvider = ({ children }) => {
         reactions: reactions,
         userId: userId,
         tags: tags,
+      },
+    });
+  };
+
+  const addInitialPosts = (posts) => {
+    dispatchPostList({
+      type: "ADD_INITIAL_POSTS",
+      payload: {
+        posts,
       },
     });
   };
@@ -60,30 +68,12 @@ const PostListProvider = ({ children }) => {
         postList,
         addPost,
         deletePost,
+        addInitialPosts,
       }}
     >
       {children}
     </PostList.Provider>
   );
 };
-
-const DEFAULT_POST_LIST = [
-  {
-    id: "1",
-    title: "Going to Mumbai",
-    body: "Hi frens, I am going to Mumbai for my vactions. Hope to enjoy a lot. Peace Out",
-    reactions: 2,
-    userId: "user-9",
-    tags: ["vaction", "Mumbai", "Enjoying"],
-  },
-  {
-    id: "2",
-    title: "Pass hogaya bhai",
-    body: "4 saal ki masti k baad bhi ho gate hain pass. Hard to beleive",
-    reactions: 15,
-    userId: "user-12",
-    tags: ["Graduating", "Unbelievable", "Enjoying"],
-  },
-];
 
 export default PostListProvider;

@@ -31,3 +31,11 @@
   min-width: 80%;
   margin: 50px 10%;
 }
+
+.welcome-msg{
+  margin: 4rem;
+}
+
+.spinner{
+  margin: 10% 0;
+}
