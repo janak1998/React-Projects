@@ -1,5 +1,20 @@
+import { useEffect } from "react";
+import { useState } from "react";
+
 let CurrentTime = () => {
-  let time = new Date();
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    console.log("Interval has been setup");
+    const intervalId = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => {
+      // clearInterval(intervalId);
+      console.log("cancelled the interval");
+    };
+  }, []);
 
   return (
     <p className="lead">
