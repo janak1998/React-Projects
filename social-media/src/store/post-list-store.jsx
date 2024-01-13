@@ -1,10 +1,10 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 //Default context structure
 const DEFAULT_CONTEXT = {
   postList: [],
   addPost: () => {},
-  addInitialPosts: () => {},
   deletePost: () => {},
+  fetching: false,
 };
 
 //context initialise
@@ -16,8 +16,6 @@ const postListReducer = (currPostList, action) => {
     newPostList = currPostList.filter(
       (post) => post.id !== action.payload.postId
     );
-  } else if (action.type === "ADD_INITIAL_POSTS") {
-    newPostList = action.payload.posts;
   } else if (action.type === "ADD_POST") {
     newPostList = [action.payload, ...currPostList];
   }
@@ -28,28 +26,10 @@ const postListReducer = (currPostList, action) => {
 const PostListProvider = ({ children }) => {
   const [postList, dispatchPostList] = useReducer(postListReducer, []);
 
-  const addPost = (userId, postTitle, postBody, reactions, tags) => {
-    var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
-
+  const addPost = (post) => {
     dispatchPostList({
       type: "ADD_POST",
-      payload: {
-        id: randLetter + Date.now(),
-        title: postTitle,
-        body: postBody,
-        reactions: reactions,
-        userId: userId,
-        tags: tags,
-      },
-    });
-  };
-
-  const addInitialPosts = (posts) => {
-    dispatchPostList({
-      type: "ADD_INITIAL_POSTS",
-      payload: {
-        posts,
-      },
+      payload: post,
     });
   };
 
@@ -68,7 +48,6 @@ const PostListProvider = ({ children }) => {
         postList,
         addPost,
         deletePost,
-        addInitialPosts,
       }}
     >
       {children}
