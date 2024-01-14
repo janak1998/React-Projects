@@ -1,0 +1,12 @@
+.counter-wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+.control-row{
+  margin: 10px
+}
+
+.number-input{
+  max-width: 110px;
+}
