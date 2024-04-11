@@ -1,4 +1,4 @@
-# Scocial Media
+# Social Media
 
 Live Link - https://melodious-pavlova-51108b.netlify.app/
 
